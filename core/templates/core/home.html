@@ -1,0 +1,58 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<!-- ناوبری بالا -->
+<nav class="bg-gray-800 text-white p-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <h1 class="text-xl font-bold">سایت اطلاعاتی</h1>
+    <div class="space-x-4">
+      <a href="{% url 'news' %}" class="hover:underline">اخبار</a>
+      <a href="{% url 'missions' %}" class="hover:underline">ماموریت‌ها</a>
+      <a href="{% url 'ads' %}" class="hover:underline">نیازمندی‌ها</a>
+    </div>
+  </div>
+</nav>
+
+<!-- بخش اخبار وسط -->
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-12 mx-auto">
+    <div class="flex flex-wrap -m-4">
+
+      <!-- باکس 1 -->
+      <div class="p-4 lg:w-1/3">
+        <div class="h-full bg-gray-100 px-8 pt-10 pb-16 rounded-lg overflow-hidden text-center relative">
+          <h2 class="text-xs text-gray-400 mb-1">الجزیره</h2>
+          <h1 class="text-xl font-medium text-gray-900 mb-3">درگیری‌های جدید در نوار غزه</h1>
+          <p class="leading-relaxed mb-3">تحلیلگران الجزیره خبر از افزایش درگیری در مرز جنوبی داده‌اند.</p>
+        </div>
+      </div>
+
+      <!-- باکس 2 -->
+      <div class="p-4 lg:w-1/3">
+        <div class="h-full bg-gray-100 px-8 pt-10 pb-16 rounded-lg overflow-hidden text-center relative">
+          <h2 class="text-xs text-gray-400 mb-1">جهان اسلام</h2>
+          <h1 class="text-xl font-medium text-gray-900 mb-3">کنفرانس وحدت اسلامی در استانبول</h1>
+          <p class="leading-relaxed mb-3">علمای برجسته مسلمان به بررسی بحران فلسطین پرداختند.</p>
+        </div>
+      </div>
+
+      <!-- باکس 3 -->
+      <div class="p-4 lg:w-1/3">
+        <div class="h-full bg-gray-100 px-8 pt-10 pb-16 rounded-lg overflow-hidden text-center relative">
+          <h2 class="text-xs text-gray-400 mb-1">کانال 14 اسراییل</h2>
+          <h1 class="text-xl font-medium text-gray-900 mb-3">افزایش تنش امنیتی در تل‌آویو</h1>
+          <p class="leading-relaxed mb-3">نیروهای امنیتی به حال آماده‌باش درآمده‌اند.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- درباره ما -->
+<footer class="bg-gray-100 text-gray-800 p-6">
+  <div class="container mx-auto text-center">
+    <h2 class="text-lg font-semibold mb-2">درباره ما</h2>
+    <p class="text-sm">ما یک پلتفرم اطلاعاتی برای نمایش اخبار منطقه‌ای و جهانی با تمرکز بر خاورمیانه هستیم.</p>
+  </div>
+</footer>
+{% endblock %}
