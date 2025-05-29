@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8" />
+    <title>ثبت نام مشتری</title>
+    <style>
+        body { font-family: Arial, sans-serif; direction: rtl; padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input { width: 100%; padding: 8px; box-sizing: border-box; }
+        button { padding: 10px 15px; background-color: #28a745; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #218838; }
+        .messages { color: green; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h1>ثبت نام مشتری</h1>
+
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">ثبت نام</button>
+    </form>
+</body>
+</html>

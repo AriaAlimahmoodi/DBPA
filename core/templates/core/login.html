@@ -1,0 +1,217 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ورود / ثبت‌نام</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    @font-face {
+      font-family: 'IRANSans';
+      src: url('{% static "fonts/IRANSans.woff2" %}') format('woff2');
+    }
+
+    body {
+      background-image: url('/static/img/wallpaper-206.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      font-family: 'IRANSans', sans-serif;
+      color: #f9fafb;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.75);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav a {
+      color: #d1d5db;
+      font-weight: 600;
+      padding: 0.5rem;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s;
+    }
+
+    nav a:hover {
+      color: #22c55e;
+      border-bottom-color: #22c55e;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <!-- Header -->
+    <header class="backdrop-blur-md bg-black/30 shadow-md">
+      <nav class="flex justify-center gap-8 py-4 text-base">
+        <a href="{% url 'home' %}">صفحه اصلی</a>
+        <a href="{% url 'missions' %}">ماموریت‌ها</a>
+        <a href="{% url 'mercenaries' %}">مزدوران</a>
+      </nav>
+    </header>
+
+    <!-- Auth Panels -->
+    <main class="flex flex-wrap justify-center gap-6 p-6">
+      {% comment %} Admin Panel {% endcomment %}
+      <div class="bg-gray-800/80 rounded-xl p-6 w-80 shadow-xl">
+        <h2 class="text-lg font-bold text-green-400 mb-4">ورود ادمین</h2>
+        <form id="admin-form">
+          {% csrf_token %}
+          <input type="text" name="username" placeholder="نام کاربری" class="input-style" required>
+          <input type="password" name="password" placeholder="رمز عبور" class="input-style" required>
+          <button id="admin-login-btn" type="button" class="btn-green mt-4">ورود ادمین</button>
+          <p class="text-xs text-green-400 mt-2">برای ورود به پنل ادمین جنگو از اطلاعات مدیریتی استفاده کنید</p>
+        </form>
+      </div>
+
+      {% comment %} Mercenary Panel {% endcomment %}
+      <div class="bg-gray-800/80 rounded-xl p-6 w-80 shadow-xl">
+        <h2 class="text-lg font-bold text-green-400 mb-4">ورود / ثبت‌نام مزدور</h2>
+        <form id="mercenary-form" data-mode="login">
+          {% csrf_token %}
+          <input type="text" name="username" placeholder="نام کاربری" class="input-style" required>
+          <input type="password" name="password" placeholder="رمز عبور" class="input-style" required>
+
+          <div id="mercenary-register-fields" style="display:none;">
+            <input type="text" name="name" placeholder="نام" class="input-style">
+            <input type="text" name="military_specialty" placeholder="تخصص نظامی" class="input-style">
+            <input type="text" name="military_rank" placeholder="درجه نظامی" class="input-style">
+            <input type="text" name="battalion" placeholder="گردان" class="input-style">
+            <input type="text" name="nationality" placeholder="ملیت" class="input-style">
+            <input type="number" name="age" placeholder="سن" class="input-style">
+            <input type="number" name="height" placeholder="قد" class="input-style">
+            <input type="number" name="weight" placeholder="وزن" class="input-style">
+            <textarea name="about" placeholder="درباره" class="input-style"></textarea>
+          </div>
+
+          <button type="submit" class="btn-green mt-2">ادامه</button>
+          <button type="button" data-mode-toggle data-panel="mercenary" id="mercenary-mode" class="btn-outline mt-2">ثبت‌نام</button>
+          <div id="mercenary-message" class="text-sm text-green-400 mt-2"></div>
+        </form>
+      </div>
+
+      {% comment %} Customer Panel {% endcomment %}
+      <div class="bg-gray-800/80 rounded-xl p-6 w-80 shadow-xl">
+        <h2 class="text-lg font-bold text-green-400 mb-4">ورود / ثبت‌نام مشتری</h2>
+        <form id="customer-form" data-mode="login">
+          {% csrf_token %}
+          <input type="text" name="username" placeholder="نام کاربری" class="input-style" required>
+          <input type="password" name="password" placeholder="رمز عبور" class="input-style" required>
+          <button type="submit" class="btn-green mt-2">ادامه</button>
+          <button type="button" data-mode-toggle data-panel="customer" id="customer-mode" class="btn-outline mt-2">ثبت‌نام</button>
+          <div id="customer-message" class="text-sm text-green-400 mt-2"></div>
+        </form>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center text-gray-300 text-sm py-4 border-t border-gray-600 bg-black/20 mt-auto">
+      به جامعه‌ی ما بپیوندید - شما را نیاز داریم.
+    </footer>
+  </div>
+
+  <style>
+    .input-style {
+      background-color: #1f2937;
+      color: #f9fafb;
+      border: 1px solid #374151;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      margin-bottom: 0.75rem;
+      width: 100%;
+    }
+
+    .btn-green {
+      background-color: #22c55e;
+      color: white;
+      font-weight: bold;
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      transition: background-color 0.3s;
+    }
+
+    .btn-green:hover {
+      background-color: #16a34a;
+    }
+
+    .btn-outline {
+      border: 1px solid #22c55e;
+      color: #22c55e;
+      background-color: transparent;
+      font-weight: bold;
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+    }
+
+    .btn-outline:hover {
+      background-color: #22c55e20;
+    }
+  </style>
+
+  <script>
+    function switchForm(panelId, isRegister) {
+      const form = document.getElementById(panelId + '-form');
+      const registerFields = document.getElementById(panelId + '-register-fields');
+      const modeSwitch = document.getElementById(panelId + '-mode');
+      const message = document.getElementById(panelId + '-message');
+
+      if (registerFields) {
+        registerFields.style.display = isRegister ? 'block' : 'none';
+      }
+
+      form.dataset.mode = isRegister ? 'register' : 'login';
+      form.action = isRegister ? `/register/${panelId}/` : '/login/';
+      if (modeSwitch) modeSwitch.innerText = isRegister ? 'ورود' : 'ثبت‌نام';
+      if (message) message.innerHTML = isRegister ? 'در حال ثبت‌نام هستید' : '';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('[data-mode-toggle]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const panel = btn.dataset.panel;
+          const form = document.getElementById(panel + '-form');
+          const mode = form.dataset.mode;
+          switchForm(panel, mode !== 'register');
+        });
+      });
+
+      document.getElementById("admin-login-btn").addEventListener("click", function () {
+        window.location.href = "/admin/";
+      });
+
+      ['admin', 'mercenary', 'customer'].forEach(type => {
+        const form = document.getElementById(`${type}-form`);
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          const formData = new FormData(this);
+          const action = this.dataset.mode === 'register' ? `/register/${type}/` : '/login/';
+
+          fetch(action, {
+            method: 'POST',
+            headers: { 'X-CSRFToken': formData.get('csrfmiddlewaretoken') },
+            body: formData
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              window.location.href = data.redirect_url;
+            } else {
+              alert(data.message || 'خطا در ارسال اطلاعات');
+            }
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>

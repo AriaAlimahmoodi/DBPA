@@ -1,0 +1,74 @@
+[
+  {
+    "model": "core.newscard",
+    "fields": {
+      "title": "الجزیره",
+      "description": "تازه‌ترین اخبار خاورمیانه و جهان عرب",
+      "site_url": "https://www.aljazeera.com",
+      "image_url": "https://api.urlbox.io/v1/6TGyonKBnYwMSEjQ/png?url=aljazeera.com&thumb_width=600&quality=80&token=f730802893754e4f8412c04a9a3e8978"
+    }
+  },
+  {
+    "model": "core.newscard",
+    "fields": {
+      "title": "سنتکام",
+      "description": "فرماندهی مرکزی ارتش ایالات متحده",
+      "site_url": "https://www.centcom.mil",
+      "image_url": "https://api.urlbox.io/v1/6TGyonKBnYwMSEjQ/png?url=centcom.mil&thumb_width=600&quality=80&token=f730802893754e4f8412c04a9a3e8978"
+    }
+  },
+  {
+    "model": "core.newscard",
+    "fields": {
+      "title": "The Defense Post",
+      "description": "اخبار نبردها، نظامیان و امنیت جهانی",
+      "site_url": "https://www.thedefensepost.com",
+      "image_url": "https://api.urlbox.io/v1/6TGyonKBnYwMSEjQ/png?url=thedefensepost.com&thumb_width=600&quality=80&token=f730802893754e4f8412c04a9a3e8978"
+    }
+  },
+  {
+    "model": "core.newscard",
+    "fields": {
+      "title": "اسلام تایمز",
+      "description": "رویدادهای جهان اسلام و منطقه",
+      "site_url": "https://www.islamtimes.org",
+      "image_url": "https://api.urlbox.io/v1/6TGyonKBnYwMSEjQ/png?url=islamtimes.org&thumb_width=600&quality=80&token=f730802893754e4f8412c04a9a3e8978"
+    }
+  },
+  {
+    "model": "core.newscard",
+    "fields": {
+      "title": "Debka",
+      "description": "تحلیل‌های اطلاعاتی و امنیتی اسرائیل",
+      "site_url": "https://www.debka.com",
+      "image_url": "https://api.urlbox.io/v1/6TGyonKBnYwMSEjQ/png?url=debka.com&thumb_width=600&quality=80&token=f730802893754e4f8412c04a9a3e8978"
+    }
+  },
+  {
+    "model": "core.newscard",
+    "fields": {
+      "title": "العربیه انگلیسی",
+      "description": "اخبار و تحلیل‌های امنیتی خاورمیانه",
+      "site_url": "https://english.alarabiya.net",
+      "image_url": "https://api.urlbox.io/v1/6TGyonKBnYwMSEjQ/png?url=english.alarabiya.net&thumb_width=600&quality=80&token=f730802893754e4f8412c04a9a3e8978"
+    }
+  },
+  {
+    "model": "core.newscard",
+    "fields": {
+      "title": "ایران اینترنشنال",
+      "description": "پوشش جنگ‌های منطقه‌ای از دید ایران",
+      "site_url": "https://www.iranintl.com",
+      "image_url": "https://api.urlbox.io/v1/6TGyonKBnYwMSEjQ/png?url=iranintl.com&thumb_width=600&quality=80&token=f730802893754e4f8412c04a9a3e8978"
+    }
+  },
+  {
+    "model": "core.newscard",
+    "fields": {
+      "title": "Haaretz",
+      "description": "تحلیل‌های امنیتی و خبری اسرائیل",
+      "site_url": "https://www.haaretz.com/middle-east-news",
+      "image_url": "https://api.urlbox.io/v1/6TGyonKBnYwMSEjQ/png?url=haaretz.com/middle-east-news&thumb_width=600&quality=80&token=f730802893754e4f8412c04a9a3e8978"
+    }
+  }
+]

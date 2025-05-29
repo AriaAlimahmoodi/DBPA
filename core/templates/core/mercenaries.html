@@ -1,0 +1,258 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>مزدوران نظامی</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-image: url('{% static "img/ChatGPT Image May 25, 2025, 01_43_27 AM.png" %}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: #f9fafb;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background-color: rgba(55, 65, 81, 0.25);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 1rem 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 4rem;
+      direction: rtl;
+    }
+    nav a {
+      transition: color 0.3s;
+      color: #9ca3af;
+      font-weight: 600;
+      text-decoration: none;
+      padding-bottom: 0.25rem;
+      border-bottom: 2px solid transparent;
+    }
+    nav a:hover,
+    nav a:focus {
+      color: #22c55e;
+      border-bottom-color: #22c55e;
+      outline: none;
+    }
+    main {
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-grow: 1;
+      overflow-y: auto;
+      max-height: calc(100vh - 160px);
+    }
+    .card {
+      width: 22%;
+      min-width: 280px;
+      max-width: 320px;
+      background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 0.5rem;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      cursor: pointer;
+      color: #f9fafb;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .card:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      transform: scale(1.03);
+    }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .card-content {
+      padding: 1rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      color: #22c55e;
+      text-align: center;
+    }
+    .card-subtitle {
+      font-size: 1.1rem;
+      color: #a7f3d0;
+      margin-bottom: 0.6rem;
+      text-align: center;
+      font-weight: 600;
+    }
+    .details {
+      font-size: 0.9rem;
+      color: #d1d5db;
+      line-height: 1.4;
+      margin-bottom: 0.8rem;
+      padding-right: 0.2rem;
+    }
+    .details span {
+      font-weight: 600;
+      color: #22c55e;
+    }
+    .experience {
+      font-size: 0.85rem;
+      color: #e5e7eb;
+      background-color: #111827;
+      padding: 0.5rem 0.7rem;
+      border-radius: 0.3rem;
+      flex-grow: 1;
+      overflow-y: auto;
+    }
+    footer {
+      background-color: rgba(55, 65, 81, 0.25);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: #9ca3af;
+      text-align: center;
+      font-size: 0.875rem;
+      padding: 1.5rem 1rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.3);
+    }
+    .add-btn {
+      background-color: #22c55e;
+      border: none;
+      padding: 0.7rem 1.2rem;
+      color: white;
+      font-weight: 700;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      margin: 1rem auto 2rem auto;
+      display: block;
+      transition: background-color 0.3s ease;
+      width: max-content;
+    }
+    .add-btn:hover {
+      background-color: #16a34a;
+    }
+    @media (max-width: 768px) {
+      .card {
+        width: 45%;
+      }
+    }
+    @media (max-width: 480px) {
+      .card {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <a href="{% url 'home' %}">صفحه اصلی</a>
+      <a href="{% url 'missions' %}">ماموریت‌ها</a>
+      {% if not user.is_authenticated %}
+        <a href="{% url 'login' %}">ثبت‌نام / ورود</a>
+      {% else %}
+        {% if user.is_staff %}
+          <a href="{% url 'admin:index' %}">ادمین</a>
+        {% endif %}
+        <a href="{% url 'profile_edit' %}">ویرایش پروفایل</a>
+        <a href="{% url 'logout' %}">خروج</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  {% if user.is_authenticated and user.is_staff %}
+    <button id="addSoldierBtn" class="add-btn" aria-label="اضافه کردن مزدور جدید">اضافه کردن مزدور جدید</button>
+  {% endif %}
+
+  <main id="soldierList" role="list" aria-live="polite" aria-label="لیست مزدوران نظامی">
+    {% if user.is_authenticated and not user.is_staff %}
+      {# فقط پروفایل خود مزدور را نشان بده #}
+      <a href="{% url 'mercenary_detail' mercenaries.id %}" class="card" role="listitem" tabindex="0" aria-label="نمایش مشخصات مزدور نظامی {{ mercenaries.name }}">
+        <img src="{{ mercenaries.image.url }}" alt="تصویر مزدور {{ mercenaries.name }}" />
+        <div class="card-content">
+          <h2 class="card-title">{{ mercenaries.name }}</h2>
+          <h3 class="card-subtitle">تخصص نظامی: {{ mercenaries.military_specialty }}</h3>
+          <div class="details">
+            <p><span>درجه نظامی:</span> {{ mercenaries.military_rank }}</p>
+            <p><span>گردان:</span> {{ mercenaries.battalion }}</p>
+            <p><span>ملیت:</span> {{ mercenaries.nationality }}</p>
+            <p><span>سن:</span> {{ mercenaries.age }} سال</p>
+            <p><span>قد:</span> {{ mercenaries.height }} سانتی‌متر</p>
+            <p><span>وزن:</span> {{ mercenaries.weight }} کیلوگرم</p>
+          </div>
+          <div class="experience" tabindex="0">
+            {{ mercenaries.about }}
+          </div>
+        </div>
+      </a>
+    {% else %}
+      {# ادمین یا کاربر مهمان همه مزدورها را می‌بیند #}
+      {% for mercenary in mercenaries %}
+        <a href="{% url 'mercenary_detail' mercenary.id %}" class="card" role="listitem" tabindex="0" aria-label="نمایش مشخصات مزدور نظامی {{ mercenary.name }}">
+          <img src="{{ mercenary.image.url }}" alt="تصویر مزدور {{ mercenary.name }}" />
+          <div class="card-content">
+            <h2 class="card-title">{{ mercenary.name }}</h2>
+            <h3 class="card-subtitle">تخصص نظامی: {{ mercenary.military_specialty }}</h3>
+            <div class="details">
+              <p><span>درجه نظامی:</span> {{ mercenary.military_rank }}</p>
+              <p><span>گردان:</span> {{ mercenary.battalion }}</p>
+              <p><span>ملیت:</span> {{ mercenary.nationality }}</p>
+              <p><span>سن:</span> {{ mercenary.age }} سال</p>
+              <p><span>قد:</span> {{ mercenary.height }} سانتی‌متر</p>
+              <p><span>وزن:</span> {{ mercenary.weight }} کیلوگرم</p>
+            </div>
+            <div class="experience" tabindex="0">
+              {{ mercenary.about }}
+            </div>
+          </div>
+        </a>
+      {% empty %}
+        <p class="text-center text-gray-300 w-full mt-8">مزدوری یافت نشد.</p>
+      {% endfor %}
+    {% endif %}
+  </main>
+
+  <footer>
+    <p>حالا تو خدای اینجا هستی و انتخاب می‌کنی</p>
+  </footer>
+
+  {{ user.is_staff|yesno:"true,false"|json_script:"isAdmin" }}
+  <script>
+    const isAdmin = JSON.parse(document.getElementById('isAdmin').textContent);
+    const addBtn = document.getElementById('addSoldierBtn');
+    if (addBtn) {
+      addBtn.addEventListener('click', () => {
+        if (!isAdmin) {
+          alert('شما دسترسی لازم برای اضافه کردن مزدور را ندارید.');
+          return;
+        }
+        // هدایت به صفحه اضافه کردن مزدور
+        window.location.href = "{% url 'mercenary_add' %}";
+      });
+    }
+  </script>
+
+</body>
+</html>

@@ -1,58 +1,129 @@
-{% extends 'core/base.html' %}
-{% block content %}
-<!-- ناوبری بالا -->
-<nav class="bg-gray-800 text-white p-4">
-  <div class="container mx-auto flex justify-between items-center">
-    <h1 class="text-xl font-bold">سایت اطلاعاتی</h1>
-    <div class="space-x-4">
-      <a href="{% url 'news' %}" class="hover:underline">اخبار</a>
-      <a href="{% url 'missions' %}" class="hover:underline">ماموریت‌ها</a>
-      <a href="{% url 'ads' %}" class="hover:underline">نیازمندی‌ها</a>
-    </div>
-  </div>
-</nav>
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>صفحه اصلی - اخبار</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      background-image: url('{% static "img/ChatGPT Image May 26, 2025, 11_07_06 PM.png" %}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      font-family: 'IRANSans', sans-serif;
+      color: #f9fafb;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.7);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    nav a {
+      color: #d1d5db;
+      font-weight: 600;
+      padding: 0.5rem;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s;
+    }
+    nav a:hover {
+      color: #22c55e;
+      border-bottom-color: #22c55e;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <!-- Header -->
+    <header class="backdrop-blur-md bg-black/30 shadow-md">
+      <nav class="flex justify-center gap-8 py-4 text-base">
+        <a href="{% url 'login' %}">ورود / ثبت‌نام</a>
+        <a href="{% url 'missions' %}">ماموریت‌ها</a>
+        <a href="{% url 'mercenaries' %}">مزدوران</a>
+      </nav>
+    </header>
 
-<!-- بخش اخبار وسط -->
-<section class="text-gray-600 body-font">
-  <div class="container px-5 py-12 mx-auto">
-    <div class="flex flex-wrap -m-4">
-
-      <!-- باکس 1 -->
-      <div class="p-4 lg:w-1/3">
-        <div class="h-full bg-gray-100 px-8 pt-10 pb-16 rounded-lg overflow-hidden text-center relative">
-          <h2 class="text-xs text-gray-400 mb-1">الجزیره</h2>
-          <h1 class="text-xl font-medium text-gray-900 mb-3">درگیری‌های جدید در نوار غزه</h1>
-          <p class="leading-relaxed mb-3">تحلیلگران الجزیره خبر از افزایش درگیری در مرز جنوبی داده‌اند.</p>
-        </div>
+    <!-- Main content -->
+    <main class="flex flex-col items-center p-6 gap-6">
+      <h1 class="text-xl font-bold text-center text-green-400 mb-6">اخبار لحظه‌ای خاورمیانه</h1>
+      <div class="flex flex-row flex-wrap justify-center gap-6">
+        <div id="news-slot-0" class="w-72 h-96 bg-gray-800 rounded-xl overflow-hidden shadow-lg"></div>
+        <div id="news-slot-1" class="w-72 h-96 bg-gray-800 rounded-xl overflow-hidden shadow-lg"></div>
+        <div id="news-slot-2" class="w-72 h-96 bg-gray-800 rounded-xl overflow-hidden shadow-lg"></div>
+        <div id="news-slot-3" class="w-72 h-96 bg-gray-800 rounded-xl overflow-hidden shadow-lg"></div>
       </div>
+    </main>
 
-      <!-- باکس 2 -->
-      <div class="p-4 lg:w-1/3">
-        <div class="h-full bg-gray-100 px-8 pt-10 pb-16 rounded-lg overflow-hidden text-center relative">
-          <h2 class="text-xs text-gray-400 mb-1">جهان اسلام</h2>
-          <h1 class="text-xl font-medium text-gray-900 mb-3">کنفرانس وحدت اسلامی در استانبول</h1>
-          <p class="leading-relaxed mb-3">علمای برجسته مسلمان به بررسی بحران فلسطین پرداختند.</p>
-        </div>
-      </div>
-
-      <!-- باکس 3 -->
-      <div class="p-4 lg:w-1/3">
-        <div class="h-full bg-gray-100 px-8 pt-10 pb-16 rounded-lg overflow-hidden text-center relative">
-          <h2 class="text-xs text-gray-400 mb-1">کانال 14 اسراییل</h2>
-          <h1 class="text-xl font-medium text-gray-900 mb-3">افزایش تنش امنیتی در تل‌آویو</h1>
-          <p class="leading-relaxed mb-3">نیروهای امنیتی به حال آماده‌باش درآمده‌اند.</p>
-        </div>
-      </div>
-
-    </div>
+    <!-- Footer -->
+    <footer class="text-center text-gray-300 text-sm py-4 border-t border-gray-600 bg-black/20 mt-auto">
+      درباره ما: این وب‌سایت با هدف ارائه خدمات امنیتی و اطلاعاتی در سطح حرفه‌ای طراحی شده و محیطی امن برای تبادل اطلاعات مأموریتی فراهم می‌کند.
+    </footer>
   </div>
-</section>
 
-<!-- درباره ما -->
-<footer class="bg-gray-100 text-gray-800 p-6">
-  <div class="container mx-auto text-center">
-    <h2 class="text-lg font-semibold mb-2">درباره ما</h2>
-    <p class="text-sm">ما یک پلتفرم اطلاعاتی برای نمایش اخبار منطقه‌ای و جهانی با تمرکز بر خاورمیانه هستیم.</p>
-  </div>
-</footer>
-{% endblock %}
+  <script>
+    let newsCards = JSON.parse('{{ news_cards_json|escapejs }}');
+    let shuffledIndexes = [];
+    let currentPos = 0;
+    const totalSlots = 4;
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function initShuffle() {
+      shuffledIndexes = [];
+      for (let i = 0; i < newsCards.length; i++) {
+        shuffledIndexes.push(i);
+      }
+      shuffleArray(shuffledIndexes);
+      currentPos = 0;
+    }
+
+    function generateCard(card) {
+      return `
+        <a href="${card.site_url}" target="_blank" class="block h-full">
+          <img src="${card.image_url}" alt="${card.name}" class="w-full h-40 object-cover" />
+          <div class="p-4">
+            <h3 class="text-lg font-bold text-green-400">${card.name}</h3>
+            <p class="text-sm text-gray-300 mt-2">${card.description || ''}</p>
+            <p class="text-xs text-gray-400 mt-4">منبع: ${card.site_name || ''}</p>
+          </div>
+        </a>
+      `;
+    }
+
+    function updateAllSlots() {
+      if (newsCards.length === 0) return;
+
+      for (let slot = 0; slot < totalSlots; slot++) {
+        if (currentPos >= shuffledIndexes.length) {
+          initShuffle();
+        }
+
+        const cardIndex = shuffledIndexes[currentPos];
+        const card = newsCards[cardIndex];
+
+        $(`#news-slot-${slot}`).html(generateCard(card));
+
+        currentPos++;
+      }
+    }
+
+    $(document).ready(function () {
+      initShuffle();
+      updateAllSlots(); // نمایش اولیه
+      setInterval(updateAllSlots, 8000); // بروزرسانی همزمان هر ۸ ثانیه
+    });
+  </script>
+</body>
+</html>
