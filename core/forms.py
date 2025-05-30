@@ -3,7 +3,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import MercenaryProfile, Customer
 
-
 class MercenaryRegisterForm(UserCreationForm):
     name = forms.CharField(label="نام")
     military_specialty = forms.CharField(label="تخصص نظامی")
@@ -21,7 +20,6 @@ class MercenaryRegisterForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.name = self.cleaned_data["name"]
         if commit:
             user.save()
             MercenaryProfile.objects.create(
@@ -35,31 +33,20 @@ class MercenaryRegisterForm(UserCreationForm):
                 height=self.cleaned_data["height"],
                 weight=self.cleaned_data["weight"],
                 about=self.cleaned_data["about"],
+                
             )
         return user
-
-
-class CustomerForm(forms.ModelForm):
-    class Meta:
-        model = Customer
-        fields = ['alias']
-        labels = {
-            'alias': 'نام مستعار',
-        }
-
-    def clean_alias(self):
-        alias = self.cleaned_data['alias']
-        qs = Customer.objects.filter(alias__iexact=alias)
-        if self.instance.pk:
-            qs = qs.exclude(pk=self.instance.pk)
-        if qs.exists():
-            raise forms.ValidationError("این نام مستعار قبلاً ثبت شده است.")
-        return alias
 
 class CustomerRegisterForm(forms.ModelForm):
     class Meta:
         model = Customer
         fields = ['alias']
+
+    def clean_alias(self):
+        alias = self.cleaned_data['alias']
+        if Customer.objects.filter(alias__iexact=alias).exists():
+            raise forms.ValidationError("این نام مستعار قبلاً ثبت شده است.")
+        return alias
 
 class LoginForm(forms.Form):
     username = forms.CharField(label="نام کاربری")

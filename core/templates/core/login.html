@@ -14,7 +14,7 @@
     }
 
     body {
-      background-image: url('/static/img/wallpaper-206.jpg');
+      background-image: url('{% static "img/wallpaper-206.jpg" %}');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -44,80 +44,7 @@
       color: #22c55e;
       border-bottom-color: #22c55e;
     }
-  </style>
-</head>
-<body>
-  <div class="overlay">
-    <!-- Header -->
-    <header class="backdrop-blur-md bg-black/30 shadow-md">
-      <nav class="flex justify-center gap-8 py-4 text-base">
-        <a href="{% url 'home' %}">صفحه اصلی</a>
-        <a href="{% url 'missions' %}">ماموریت‌ها</a>
-        <a href="{% url 'mercenaries' %}">مزدوران</a>
-      </nav>
-    </header>
 
-    <!-- Auth Panels -->
-    <main class="flex flex-wrap justify-center gap-6 p-6">
-      {% comment %} Admin Panel {% endcomment %}
-      <div class="bg-gray-800/80 rounded-xl p-6 w-80 shadow-xl">
-        <h2 class="text-lg font-bold text-green-400 mb-4">ورود ادمین</h2>
-        <form id="admin-form">
-          {% csrf_token %}
-          <input type="text" name="username" placeholder="نام کاربری" class="input-style" required>
-          <input type="password" name="password" placeholder="رمز عبور" class="input-style" required>
-          <button id="admin-login-btn" type="button" class="btn-green mt-4">ورود ادمین</button>
-          <p class="text-xs text-green-400 mt-2">برای ورود به پنل ادمین جنگو از اطلاعات مدیریتی استفاده کنید</p>
-        </form>
-      </div>
-
-      {% comment %} Mercenary Panel {% endcomment %}
-      <div class="bg-gray-800/80 rounded-xl p-6 w-80 shadow-xl">
-        <h2 class="text-lg font-bold text-green-400 mb-4">ورود / ثبت‌نام مزدور</h2>
-        <form id="mercenary-form" data-mode="login">
-          {% csrf_token %}
-          <input type="text" name="username" placeholder="نام کاربری" class="input-style" required>
-          <input type="password" name="password" placeholder="رمز عبور" class="input-style" required>
-
-          <div id="mercenary-register-fields" style="display:none;">
-            <input type="text" name="name" placeholder="نام" class="input-style">
-            <input type="text" name="military_specialty" placeholder="تخصص نظامی" class="input-style">
-            <input type="text" name="military_rank" placeholder="درجه نظامی" class="input-style">
-            <input type="text" name="battalion" placeholder="گردان" class="input-style">
-            <input type="text" name="nationality" placeholder="ملیت" class="input-style">
-            <input type="number" name="age" placeholder="سن" class="input-style">
-            <input type="number" name="height" placeholder="قد" class="input-style">
-            <input type="number" name="weight" placeholder="وزن" class="input-style">
-            <textarea name="about" placeholder="درباره" class="input-style"></textarea>
-          </div>
-
-          <button type="submit" class="btn-green mt-2">ادامه</button>
-          <button type="button" data-mode-toggle data-panel="mercenary" id="mercenary-mode" class="btn-outline mt-2">ثبت‌نام</button>
-          <div id="mercenary-message" class="text-sm text-green-400 mt-2"></div>
-        </form>
-      </div>
-
-      {% comment %} Customer Panel {% endcomment %}
-      <div class="bg-gray-800/80 rounded-xl p-6 w-80 shadow-xl">
-        <h2 class="text-lg font-bold text-green-400 mb-4">ورود / ثبت‌نام مشتری</h2>
-        <form id="customer-form" data-mode="login">
-          {% csrf_token %}
-          <input type="text" name="username" placeholder="نام کاربری" class="input-style" required>
-          <input type="password" name="password" placeholder="رمز عبور" class="input-style" required>
-          <button type="submit" class="btn-green mt-2">ادامه</button>
-          <button type="button" data-mode-toggle data-panel="customer" id="customer-mode" class="btn-outline mt-2">ثبت‌نام</button>
-          <div id="customer-message" class="text-sm text-green-400 mt-2"></div>
-        </form>
-      </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="text-center text-gray-300 text-sm py-4 border-t border-gray-600 bg-black/20 mt-auto">
-      به جامعه‌ی ما بپیوندید - شما را نیاز داریم.
-    </footer>
-  </div>
-
-  <style>
     .input-style {
       background-color: #1f2937;
       color: #f9fafb;
@@ -157,6 +84,77 @@
       background-color: #22c55e20;
     }
   </style>
+</head>
+<body>
+  <div class="overlay">
+    <!-- Header -->
+    <header class="backdrop-blur-md bg-black/30 shadow-md">
+      <nav class="flex justify-center gap-8 py-4 text-base">
+        <a href="{% url 'home' %}">صفحه اصلی</a>
+        <a href="{% url 'missions' %}">ماموریت‌ها</a>
+        <a href="{% url 'mercenaries' %}">مزدوران</a>
+      </nav>
+    </header>
+
+    <!-- Auth Panels -->
+    <main class="flex flex-wrap justify-center gap-6 p-6">
+      <!-- Admin -->
+      <div class="bg-gray-800/80 rounded-xl p-6 w-80 shadow-xl">
+        <h2 class="text-lg font-bold text-green-400 mb-4">ورود ادمین</h2>
+        <form id="admin-form">
+          {% csrf_token %}
+          <input type="text" name="username" placeholder="نام کاربری" class="input-style" required>
+          <input type="password" name="password" placeholder="رمز عبور" class="input-style" required>
+          <button id="admin-login-btn" type="button" class="btn-green mt-4">ورود ادمین</button>
+          <p class="text-xs text-green-400 mt-2">برای ورود به پنل ادمین جنگو از اطلاعات مدیریتی استفاده کنید</p>
+        </form>
+      </div>
+
+      <!-- Mercenary -->
+      <div class="bg-gray-800/80 rounded-xl p-6 w-80 shadow-xl">
+        <h2 class="text-lg font-bold text-green-400 mb-4">ورود / ثبت‌نام مزدور</h2>
+        <form id="mercenary-form" data-mode="login">
+          {% csrf_token %}
+          <input type="text" name="username" placeholder="نام کاربری" class="input-style" required>
+          <input type="password" name="password" placeholder="رمز عبور" class="input-style" required>
+
+          <div id="mercenary-register-fields" style="display:none;">
+            <input type="text" name="name" placeholder="نام" class="input-style">
+            <input type="text" name="military_specialty" placeholder="تخصص نظامی" class="input-style">
+            <input type="text" name="military_rank" placeholder="درجه نظامی" class="input-style">
+            <input type="text" name="battalion" placeholder="گردان" class="input-style">
+            <input type="text" name="nationality" placeholder="ملیت" class="input-style">
+            <input type="number" name="age" placeholder="سن" class="input-style">
+            <input type="number" name="height" placeholder="قد" class="input-style">
+            <input type="number" name="weight" placeholder="وزن" class="input-style">
+            <textarea name="about" placeholder="درباره" class="input-style"></textarea>
+          </div>
+
+          <button type="submit" class="btn-green mt-2">ادامه</button>
+          <button type="button" data-mode-toggle data-panel="mercenary" id="mercenary-mode" class="btn-outline mt-2">ثبت‌نام</button>
+          <div id="mercenary-message" class="text-sm text-green-400 mt-2"></div>
+        </form>
+      </div>
+
+      <!-- Customer -->
+      <div class="bg-gray-800/80 rounded-xl p-6 w-80 shadow-xl">
+        <h2 class="text-lg font-bold text-green-400 mb-4">ورود / ثبت‌نام مشتری</h2>
+        <form id="customer-form" data-mode="login">
+          {% csrf_token %}
+          <input type="text" name="username" placeholder="نام کاربری" class="input-style" required>
+          <input type="password" name="password" placeholder="رمز عبور" class="input-style" required>
+          <button type="submit" class="btn-green mt-2">ادامه</button>
+          <button type="button" data-mode-toggle data-panel="customer" id="customer-mode" class="btn-outline mt-2">ثبت‌نام</button>
+          <div id="customer-message" class="text-sm text-green-400 mt-2"></div>
+        </form>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center text-gray-300 text-sm py-4 border-t border-gray-600 bg-black/20 mt-auto">
+      به جامعه‌ی ما بپیوندید - شما را نیاز داریم.
+    </footer>
+  </div>
 
   <script>
     function switchForm(panelId, isRegister) {
@@ -189,7 +187,7 @@
         window.location.href = "/admin/";
       });
 
-      ['admin', 'mercenary', 'customer'].forEach(type => {
+      ['mercenary', 'customer'].forEach(type => {
         const form = document.getElementById(`${type}-form`);
         form.addEventListener('submit', function (e) {
           e.preventDefault();

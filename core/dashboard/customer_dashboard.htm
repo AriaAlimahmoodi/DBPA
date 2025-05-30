@@ -1,12 +1,72 @@
+<!-- templates/customer_dashboard.html -->
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>پنل مشتری</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <title>داشبورد مشتری</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    @font-face {
+      font-family: IRANSans;
+      src: url("/static/fonts/IRANSans.woff") format("woff");
+    }
+    body {
+      font-family: IRANSans, sans-serif;
+    }
+  </style>
 </head>
-<body class="bg-gray-700 text-white font-sans p-6">
-  <h1 class="text-2xl text-green-400 font-bold mb-4">داشبورد مشتری</h1>
-  <p>خوش آمدید، مشتری گرامی.</p>
+<body class="bg-gray-900 text-white min-h-screen">
+
+  <header class="bg-gray-800 shadow-md p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold">داشبورد مشتری</h1>
+    <a href="/logout/" class="text-sm text-red-400 hover:text-red-200">خروج</a>
+  </header>
+
+  <main class="p-6 space-y-6">
+
+    <!-- مشخصات مشتری -->
+    <section class="bg-gray-800 p-4 rounded-xl shadow">
+      <h2 class="text-xl font-bold mb-3">نام مستعار من</h2>
+      <p class="text-lg text-yellow-300">{{ customer.alias }}</p>
+    </section>
+
+    <!-- فرم ایجاد مأموریت -->
+    <section class="bg-gray-800 p-4 rounded-xl shadow">
+      <h2 class="text-xl font-bold mb-3">ایجاد مأموریت جدید</h2>
+      <form id="create-mission-form" method="POST" action="{% url 'create_mission' %}" class="space-y-4">
+        {% csrf_token %}
+        <input name="title" type="text" placeholder="عنوان مأموریت" class="w-full p-2 rounded bg-gray-700 text-white" required>
+        <textarea name="description" placeholder="توضیحات" class="w-full p-2 rounded bg-gray-700 text-white" required></textarea>
+        <input name="date" type="date" class="w-full p-2 rounded bg-gray-700 text-white" required>
+        <input name="location" type="text" placeholder="موقعیت" class="w-full p-2 rounded bg-gray-700 text-white" required>
+        <button type="submit" class="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700">ثبت مأموریت</button>
+      </form>
+    </section>
+
+    <!-- مأموریت‌های ایجادشده -->
+    <section class="bg-gray-800 p-4 rounded-xl shadow">
+      <h2 class="text-xl font-bold mb-3">مأموریت‌های من</h2>
+      <div class="space-y-4">
+        {% for mission in missions %}
+        <div class="p-3 bg-gray-700 rounded-xl border border-gray-600">
+          <h3 class="text-lg font-semibold">{{ mission.title }}</h3>
+          <p class="text-sm text-gray-300">{{ mission.description }}</p>
+          <p class="text-sm">تاریخ: {{ mission.date }}</p>
+          <p class="text-sm">وضعیت: 
+            {% if mission.is_approved_by_admin %}
+              <span class="text-green-400">نمایش عمومی</span>
+            {% else %}
+              <span class="text-yellow-400">در انتظار تأیید ادمین</span>
+            {% endif %}
+          </p>
+        </div>
+        {% empty %}
+        <p class="text-gray-400">شما هنوز هیچ مأموریتی ثبت نکرده‌اید.</p>
+        {% endfor %}
+      </div>
+    </section>
+
+  </main>
+
 </body>
 </html>

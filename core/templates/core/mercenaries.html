@@ -240,18 +240,54 @@
 
   {{ user.is_staff|yesno:"true,false"|json_script:"isAdmin" }}
   <script>
-    const isAdmin = JSON.parse(document.getElementById('isAdmin').textContent);
-    const addBtn = document.getElementById('addSoldierBtn');
-    if (addBtn) {
-      addBtn.addEventListener('click', () => {
-        if (!isAdmin) {
-          alert('شما دسترسی لازم برای اضافه کردن مزدور را ندارید.');
-          return;
+        const form = document.getElementById('profile-form');
+        const messageBox = document.getElementById('message-box');
+        const formContainer = document.getElementById('form-container');
+        const editBtn = document.getElementById('edit-btn');
+
+        if (editBtn) {
+            editBtn.addEventListener('click', () => {
+                formContainer.classList.toggle('hidden');
+            });
         }
-        // هدایت به صفحه اضافه کردن مزدور
-        window.location.href = "{% url 'mercenary_add' %}";
-      });
-    }
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+
+            fetch("{% url 'mercenary_profile' %}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                messageBox.classList.remove('hidden');
+                if (data.status === 'success') {
+                    messageBox.classList.remove('bg-red-500');
+                    messageBox.classList.add('bg-green-500');
+                } else {
+                    messageBox.classList.remove('bg-green-500');
+                    messageBox.classList.add('bg-red-500');
+                }
+                messageBox.textContent = data.message;
+
+                if (data.status === 'success') {
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                }
+            })
+            .catch(err => {
+                messageBox.classList.remove('hidden', 'bg-green-500');
+                messageBox.classList.add('bg-red-500');
+                messageBox.textContent = 'خطایی رخ داده است. لطفاً دوباره تلاش کنید.';
+            });
+        });
+
   </script>
 
 </body>

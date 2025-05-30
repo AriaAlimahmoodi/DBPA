@@ -2,11 +2,77 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>پنل مزدور</title>
+  <title>داشبورد مزدور (AJAX)</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: IRANSans, sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+    .btn {
+      @apply px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 transition text-white;
+    }
+  </style>
 </head>
-<body class="bg-gray-800 text-white font-sans p-6">
-  <h1 class="text-2xl text-green-400 font-bold mb-4">داشبورد مزدور</h1>
-  <p>خوش آمدید، شما اکنون وارد حساب خود شده‌اید.</p>
+<body class="min-h-screen flex flex-col items-center justify-center space-y-8 p-4">
+
+  <h1 class="text-3xl font-bold">داشبورد مزدور</h1>
+
+  <!-- دکمه‌های چهارگانه -->
+  <div class="flex flex-wrap justify-center gap-4">
+    <a href="/" class="btn">صفحه اصلی</a>
+    <a href="/missions/" class="btn">مأموریت‌ها</a>
+    <a href="/mercenaries/" class="btn">مزدوران</a>
+    <a href="/logout/" class="btn bg-red-600 hover:bg-red-700">خروج</a>
+  </div>
+
+  <!-- وضعیت تایید پروفایل -->
+  {% if profile.is_approved %}
+    <div class="bg-green-700 p-3 rounded mb-4">✅ پروفایل شما تأیید شده است و در لیست عمومی مزدوران قرار دارد.</div>
+  {% else %}
+    <div class="bg-yellow-600 p-3 rounded mb-4">🕒 پروفایل شما در انتظار تأیید توسط ادمین است.</div>
+  {% endif %}
+
+  <!-- فرم پروفایل -->
+  <div class="w-full max-w-xl bg-slate-800 p-6 rounded-2xl shadow-lg mt-4">
+    <div id="message-box" class="hidden p-2 mb-4 rounded"></div>
+
+    <form id="profile-form" enctype="multipart/form-data" class="space-y-4">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn w-full">ذخیره پروفایل</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('profile-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const formData = new FormData(form);
+      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+      const messageBox = document.getElementById('message-box');
+
+      const response = await fetch("{% url 'update_mercenary_profile' %}", {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': csrfToken
+        },
+        body: formData
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        messageBox.className = 'bg-green-600 text-white p-2 mb-4 rounded';
+        messageBox.textContent = data.message;
+        messageBox.classList.remove('hidden');
+      } else {
+        messageBox.className = 'bg-red-600 text-white p-2 mb-4 rounded';
+        messageBox.textContent = data.message || "خطایی رخ داد.";
+        messageBox.classList.remove('hidden');
+      }
+    });
+  </script>
 </body>
 </html>
